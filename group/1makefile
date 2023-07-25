@@ -1,0 +1,22 @@
+CC = gcc
+CFLAGS = -Wall -Werror -Wextra
+
+all: graph clean
+
+graph: graph.o structs.o calc.o RPN.o
+	$(CC) $(CFLAGS) graph.o structs.o calc.o RPN.o -o ../build/graph
+
+graph.o: graph.c structs.h calc.h RPN.h defines.h graph.h
+	$(CC) $(CFLAGS) -c graph.c -o graph.o
+
+structs.o: structs.c structs.h
+	$(CC) $(CFLAGS) -c structs.c -o structs.o
+
+calc.o: calc.c defines.h calc.h structs.h
+	$(CC) $(CFLAGS) -c calc.c -o calc.o
+
+RPN.o: RPN.c RPN.h structs.h defines.h
+	$(CC) $(CFLAGS) -c RPN.c -o RPN.o
+
+clean:
+	rm -rf *.o
